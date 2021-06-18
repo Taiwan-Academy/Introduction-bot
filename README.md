@@ -1,4 +1,5 @@
-# Introduction-bot
+# Introduction bot
+
 ## Introduction 
 * 教導 User 基本 Discord 使用
 * 利用 [Discord interactive](https://github.com/astariul/discord_interactive_help) 引導使用者建立 身分role
@@ -14,4 +15,3 @@ Bot Dm welcome Message :
 * 4th Page: Select School
 * (Optional) Page for personal inforamtion (listen on users' returned messages)
 * 5th Page: Thank you page, Give user "Verified" role. 也可提供到板規/Introduction的 連結
-
