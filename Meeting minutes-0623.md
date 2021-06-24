@@ -1,4 +1,6 @@
-#configure
+# configure
+
+```json
 {
     "pages":[
         {
@@ -29,15 +31,25 @@
     ]
     
 }
+```
 
 
 
-#DB schema
-#User Table
+# DB schema
+
+## User Table
+
+| Field Name | Is required? | Is key? | Description |
+| ---------- | ------------ | ------- | ----------- |
+| User ID | Yes | Yes |  |
+| User Name | Yes | Yes |  |
+
 Key : User ID/User Name
+
 Optional: Institution abbr/Program Degree/Program Name/Program Start Year/Program End Year/LinkedIn/Create Dt/Last Update Time/Last Update User/User Leave Server Dt
 
-#DB schema
-#School Table
+## School Table
+
 Key:ID/縮寫
+
 Optional: School Name/ Region
