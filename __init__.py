@@ -3,6 +3,7 @@ import json
 from API import API
 from os import listdir
 from os.path import isfile, join
+
 class IntroductionBot(Bot):
 
     def __init__(self):
@@ -24,12 +25,12 @@ class IntroductionBot(Bot):
 
     def on_message(self, message):
         print("IntroductionBot message: [{}] {}".format(message.author, message.content)) # FIXME:
-        message = self.api.client_await()
-        print("Client_await {}".format(message))
+        message = api.client_await()
+        print(message)
     
-    # def on_member_join(self, member):
-    #     Pages = self.pages['pages']
-    #     for page in Pages:
-    #         print(page)
+    def on_member_join(self, member):
+        Pages = self.pages['pages']
+        for page in Pages:
+            print(page)
 
-    #     print('')
+        print('')
