@@ -1,4 +1,5 @@
 from Bot import Bot
+from IntroductionBot import page6
 
 class IntroductionBot(Bot):
     
@@ -6,4 +7,4 @@ class IntroductionBot(Bot):
         print("IntroductionBot ready") # FIXME:
 
     def on_message(self, message):
-        print("IntroductionBot message: [{}] {}".format(message.author, message.content)) # FIXME:
+        page6.on_message(self, message)
