@@ -13,8 +13,8 @@ Bot Dm welcome Message :
 * 2nd Page: Select Bachelor, Master, Phd
 * 3rd Page: Let Users use plain text to reply for School abbreviation
 * 4th Page: Select Fields(High levels)
-* 5th Page: Thank you page, Give user "Verified" role. 也可提供到板規/Introduction的 連結
-
-----optional, Or told them to update information in introduction channel? ---
 * 5th Page: Users inputs Program name, start_date, end_date
 * 6th Page: linkedIn?
+* 7th Page: Thank you page, Give user "Verified" role. 也可提供到板規/Introduction的 連結
+
+
