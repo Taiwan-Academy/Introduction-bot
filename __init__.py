@@ -6,5 +6,5 @@ class IntroductionBot(Bot):
     def on_ready(self):
         print("IntroductionBot ready") # FIXME:
 
-    def on_message(self, message):
-        page6.on_message(self, message)
+    async def on_message(self, message):
+        await page6.on_message(self, message)
