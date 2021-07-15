@@ -1,9 +1,6 @@
 import discord
 import transaction
 
-async def on_bot_message(bot, message):
-    print("message")
-
 async def on_message(bot, message):
     user = bot.storage["pending_users"][message.author.id]
     if user["current_page"] == "6":

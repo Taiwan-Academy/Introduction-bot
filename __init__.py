@@ -15,9 +15,6 @@ class IntroductionBot(Bot):
 
     async def on_message(self, message):
         await page6.on_message(self, message)
-    
-    async def on_bot_message(self, message):
-        await page6.on_bot_message(self, message)
 
     async def on_member_join(self, member):
         self.storage["pending_users"][member.id] = {
