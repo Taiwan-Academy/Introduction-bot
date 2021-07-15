@@ -1,18 +1,22 @@
 import discord
+import transaction
 
-account_status = "page5" #FIXME: Should retrieve from DB
+async def on_bot_message(bot, message):
+    print("message")
 
 async def on_message(bot, message):
-    global account_status
-    if account_status == "page5":
+    user = bot.storage["pending_users"][message.author.id]
+    if user["current_page"] == "6":
         content = discord.Embed(
-            title = "[Optioal] Please input your LinkedIn link",
-            description = "Input the link of your LinkedIn profile page if you wish.",
+            title = "Please input your LinkedIn link",
+            description = "Input the link of your LinkedIn profile page, or N/A if you don't wish to provide",
             colour = discord.Colour.orange()
         )
         await message.author.send(embed = content)
-        account_status = "page6"
-    elif account_status == "page6":
-        user = message.author
+        user["current_page"] = "6-1"
+        transaction.commit()
+    elif user["current_page"] == "6-1":
         linkin_link = message.content
         print("Page 6 User: {}, Link {}".format(user, linkin_link)) # FIXME:
+        user["current_page"] = "6"
+        transaction.commit()
