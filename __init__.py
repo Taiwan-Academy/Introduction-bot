@@ -15,9 +15,6 @@ class IntroductionBot(Bot):
         print("IntroductionBot ready") # FIXME:
 
     async def on_message(self, message):
-        # msg = '{} {}'.format(message.author.id, message.author.name)
-        # await message.author.send(msg)
-
         await page6.on_message(self, message)
 
     async def on_member_join(self, member):
