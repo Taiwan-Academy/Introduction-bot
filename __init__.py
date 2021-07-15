@@ -1,36 +1,24 @@
 from Bot import Bot
-import json
-from API import API
-from os import listdir
-from os.path import isfile, join
+from IntroductionBot import page6
+from BotStorage import BotStorage
+import transaction
 
 class IntroductionBot(Bot):
-
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
-        # print("Intro init")
+        self.storage = BotStorage(self)
+        if self.storage["pending_users"] == None:
+            self.storage["pending_users"] = {}
 
-        # KEY, submod
-        # mypath = '.'
-        # onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
-        # print(onlyfiles)
-
-        # Loads Page Configure JSON
-        f = open('./IntroductionBot/configure.json')
-        self.pages = json.load(f)
-        f.close()
-
-    def on_ready(self):
+    async def on_ready(self):
         print("IntroductionBot ready") # FIXME:
 
-    def on_message(self, message):
-        print("IntroductionBot message: [{}] {}".format(message.author, message.content)) # FIXME:
-        message = api.client_await()
-        print(message)
-    
-    def on_member_join(self, member):
-        Pages = self.pages['pages']
-        for page in Pages:
-            print(page)
+    async def on_message(self, message):
+        await page6.on_message(self, message)
 
-        print('')
+    async def on_member_join(self, member):
+        self.storage["pending_users"][member.id] = {
+            "name": member.name,
+            "current_page": "6" # FIXME:
+        }
+        transaction.commit()
