@@ -1,3 +1,4 @@
+import discord
 import transaction
 from Bot import Bot
 from BotStorage import BotStorage
@@ -19,13 +20,35 @@ class IntroductionBot(Bot):
         print("IntroductionBot ready")
 
     async def on_message(self, message):
-        await page5.on_message(self, message)
-        await page6.on_message(self, message)
+        if not message.author.bot:
+            await page5.on_message(self, message)
+            await page6.on_message(self, message)
 
     async def on_member_join(self, member):
-        DB().add_users({
-            "user_id": member.id,
-            "user_name": f"{member.name}#{member.discriminator}"
-        })
-        self.storage["pending_user"][str(member.id)] = "5" # FIXME:
-        transaction.commit()
+        if not member.bot:
+            self.__ensure_user(member)
+
+    async def on_member_update(self, before, member):
+        if (
+            (not member.bot)
+            and (not (str(member.id) in self.storage["validated_user"]))
+            and (member.status != before.status)
+            and (member.status == discord.Status.online)
+        ):
+            self.__ensure_user(member)
+            await member.send(embed = discord.Embed(
+                title = "Account not verified",
+                description = "Please input anything to finish introduction questions",
+                colour = discord.Colour.red()
+            ))
+
+    def __ensure_user(self, user):
+        db = DB()
+        if db.get_user_by_ID(user.id) == None:
+            db.add_users({
+                "user_id": user.id,
+                "user_name": f"{user.name}#{user.discriminator}"
+            })
+        if not self.storage["pending_user"].has_key(str(user.id)):
+            self.storage["pending_user"][str(user.id)] = "5" # FIXME:
+            transaction.commit()
