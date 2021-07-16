@@ -1,20 +1,32 @@
 import discord
 import transaction
+import re
+from DB import DB
+
+linkedin_re = re.compile(r"(https|http)://(www.linkedin.com|linkedin.com)/in/.*")
 
 async def on_message(bot, message):
-    if message.author.id in bot.storage["pending_users"].keys():
-        user = bot.storage["pending_users"][message.author.id]
-        if user["current_page"] == "6":
+    user_id = str(message.author.id)
+    if bot.storage["pending_user"][user_id] == "6":
+        content = discord.Embed(
+            title = "Please input your LinkedIn link",
+            description = "Input the link of your LinkedIn profile page, or N/A if you don't wish to provide",
+            colour = discord.Colour.orange()
+        )
+        await message.author.send(embed = content)
+        bot.storage["pending_user"][user_id] = "6-1"
+        transaction.commit()
+    elif bot.storage["pending_user"][user_id] == "6-1":
+        if (message.content == "N/A") or (linkedin_re.match(message.content) != None):
+            DB().update_user_by_ID(message.author.id, {
+                "linkedin_url": message.content
+            })
+            bot.storage["pending_user"][user_id] = "7"
+            transaction.commit()
+        else:
             content = discord.Embed(
-                title = "Please input your LinkedIn link",
+                title = "Invalid format! Please input valid again",
                 description = "Input the link of your LinkedIn profile page, or N/A if you don't wish to provide",
-                colour = discord.Colour.orange()
+                colour = discord.Colour.red()
             )
             await message.author.send(embed = content)
-            user["current_page"] = "6-1"
-            transaction.commit()
-        elif user["current_page"] == "6-1":
-            linkin_link = message.content
-            print("Page 6 User: {}, Link {}".format(user, linkin_link)) # FIXME:
-            user["current_page"] = "6"
-            transaction.commit()
