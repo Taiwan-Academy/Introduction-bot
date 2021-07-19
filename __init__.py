@@ -21,7 +21,6 @@ class IntroductionBot(Bot):
         print("IntroductionBot ready")
 
     async def on_message(self, message):
-        self.__ensure_user(message.author)
         if not message.author.bot:
             await page3.on_message(self, message)
             await page4.on_message(self, message)
@@ -56,5 +55,5 @@ class IntroductionBot(Bot):
                 "user_name": f"{user.name}#{user.discriminator}"
             })
         if not self.storage["pending_user"].has_key(str(user.id)):
-            self.storage["pending_user"][str(user.id)] = "7" # FIXME:
+            self.storage["pending_user"][str(user.id)] = "3" # FIXME:
             transaction.commit()
