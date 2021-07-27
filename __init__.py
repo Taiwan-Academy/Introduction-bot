@@ -5,7 +5,7 @@ from BotStorage import BotStorage
 from BTrees.OOBTree import OOBTree
 from persistent.list import PersistentList
 from DB import DB
-from IntroductionBot import page3, page4 ,page5, page6, page7
+from IntroductionBot import page1,page2,page3, page4 ,page5, page6, page7
 
 
 class IntroductionBot(Bot):
@@ -21,7 +21,10 @@ class IntroductionBot(Bot):
         print("IntroductionBot ready")
 
     async def on_message(self, message):
+        self.__ensure_user(message.author)
         if not message.author.bot:
+            await page1.on_message(self, message)
+            await page2.on_message(self, message)
             await page3.on_message(self, message)
             await page4.on_message(self, message)
             await page5.on_message(self, message)
@@ -54,6 +57,7 @@ class IntroductionBot(Bot):
                 "user_id": user.id,
                 "user_name": f"{user.name}#{user.discriminator}"
             })
+
         if not self.storage["pending_user"].has_key(str(user.id)):
-            self.storage["pending_user"][str(user.id)] = "3" # FIXME:
+            self.storage["pending_user"][str(user.id)] = "7" # FIXME:
             transaction.commit()

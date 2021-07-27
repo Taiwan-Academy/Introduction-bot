@@ -1,5 +1,6 @@
 import discord
 import transaction
+from datetime import datetime
 import sys
 sys.path.append("..")
 from API import API
@@ -24,9 +25,9 @@ async def on_message(bot, message):
         del bot.storage["pending_user"][user_id]
         bot.storage["validated_user"].append(user_id)
         transaction.commit()
-
         # Change User status to verified
         DB().update_user_by_ID(message.author.id, {
-            "user_status": "Verified"
+            "user_status": "Verified",
+            "last_updated_dt": datetime.now()
             }
         )
