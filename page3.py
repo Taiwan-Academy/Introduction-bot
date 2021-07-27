@@ -4,6 +4,7 @@ from DB import DB
 
 async def on_message(bot, message):
     user_id = str(message.author.id)
+
     db = DB()
     if bot.storage["pending_user"][user_id] == "3":
         content = discord.Embed(

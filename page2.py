@@ -9,19 +9,18 @@ async def on_message(bot, message):
     user_id = str(message.author.id)
     db = DB()
     api = API()
-    if bot.storage["pending_user"][user_id] == "4":
+    if bot.storage["pending_user"][user_id] == "2":
         content = discord.Embed(
-            title = "Please Choose your fields of study",
-            description = "Please select the reaction to represent your fields of study.",
+            title = "Please Choose your degree",
+            description = "Please select the reaction to represent your degree",
             colour = discord.Colour.orange()
         )
 
         fields_mapper = {
-            "⚙": "Engineering",
-            "💻": "Computer",
-            "📜": "Lawyer",
-            "💹": "Business",
-            "🎓": "Others"
+            "⚙": "Phd",
+            "💻": "Master",
+            "📜": "Bachelor",
+
         }
         for key, item in fields_mapper.items():
             content.add_field(name=item, value=key,inline=True)
@@ -37,9 +36,9 @@ async def on_message(bot, message):
         print(reaction, response)
 
         DB().update_user_by_ID(message.author.id, {
-            "field_of_study": response
+            "prog_deg": response
         })
-        bot.storage["pending_user"][user_id] = "5"
+        bot.storage["pending_user"][user_id] = "3"
         transaction.commit()
 
       
